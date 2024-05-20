@@ -13,14 +13,14 @@ function createRegister() {
       var location = line[7];
       var descriptionDenounces = "Descrição: " + line[8] + "\nLocal: " + location;
       var day = line[10];
-      var startTime = line[11];
-      var endTime = line[12];
+      var startTime = Utilities.formatDate(new Date(line[11]), Session.getScriptTimeZone(), 'HH:mm:ss');
+      var endTime = Utilities.formatDate(new Date(line[12]), Session.getScriptTimeZone(), 'HH:mm:ss');
 
       //Formatting Start and End Date
-      var startDate = new Date(day.split("-")[0], day.split("-")[1] - 1, day.split("-")[2]);
-      var endDate = new Date(day.split("-")[0], day.split("-")[1] - 1, day.split("-")[2]);
-
+      var startDate = new Date(day);
       startDate.setHours(startTime.split(":")[0], startTime.split(":")[1]);
+
+      var endDate = new Date(day);
       endDate.setHours(endTime.split(":")[0], endTime.split(":")[1]);
 
       //Configures event color
