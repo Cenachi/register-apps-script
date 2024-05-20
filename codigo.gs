@@ -4,12 +4,12 @@ function createRegister() {
 
   const schedule = CalendarApp.getDefaultCalendar();
 
-  for (let i = 1; i < inputs.length; i++) {
-    const line = inputs[i];
-    const sync = line[19];
+  inputs.forEach((line, i) => {
+    const isSyncronized = line[19];
 
-    if (sync == "SIM") {
-      continue;
+    //Skip the header row
+    if (isSyncronized == "SIM" || i == 0) {
+      return;
     }
 
     const title = line[5];
@@ -27,37 +27,19 @@ function createRegister() {
     endDate.setHours(endTime.split(":")[0], endTime.split(":")[1]);
 
     //Configures event color
-    let color;
-
-    switch (title) {
-      case "Curso D'água":
-        color = CalendarApp.EventColor.CYAN;
-        break;
-
-      case "Desmatamento":
-        color = CalendarApp.EventColor.YELLOW;
-        break;
-
-      case "Invasão":
-        color = CalendarApp.EventColor.ORANGE;
-        break;
-
-      case "Maus Tratos":
-        color = CalendarApp.EventColor.RED;
-        break;
-
-      case "Resíduos":
-        color = CalendarApp.EventColor.GRAY;
-        break;
-
-      default:
-        color = CalendarApp.EventColor.PALE_BLUE;
-    }
+    const colors = {
+      "Curso D'água": CalendarApp.EventColor.CYAN,
+      "Desmatamento": CalendarApp.EventColor.YELLOW,
+      "Invasão": CalendarApp.EventColor.ORANGE,
+      "Maus Tratos": CalendarApp.EventColor.RED,
+      "Resíduos": CalendarApp.EventColor.GRAY,
+      default: CalendarApp.EventColor.PALE_BLUE
+    };
 
     const event = schedule.createEvent(title, startDate, endDate, { description: descriptionDenounces });
-    event.setColor(color);
+    event.setColor(colors[title] || colors.default);
 
     //Update Column 'Sincronizado'
     spreadsheetG.getRange(i + 1, 20).setValue("SIM");
-  }
+  });
 }
