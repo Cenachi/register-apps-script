@@ -30,6 +30,7 @@ function createRegister() {
     const colors = {
       "Curso D'água": CalendarApp.EventColor.CYAN,
       "Desmatamento": CalendarApp.EventColor.YELLOW,
+      "Esgoto": CalendarApp.Color.MAUVE,
       "Invasão": CalendarApp.EventColor.ORANGE,
       "Maus Tratos": CalendarApp.EventColor.RED,
       "Resíduos": CalendarApp.EventColor.GRAY,
